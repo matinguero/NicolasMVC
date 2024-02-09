@@ -1,0 +1,62 @@
+﻿@model IEnumerable<NicolasMVC.Models.Noticia>
+
+
+
+@{
+    var Categorias = ViewData["CATEGORIAS"] as List<NicolasMVC.Models.CategoriasNoticia>;
+}
+
+
+
+@{
+    ViewBag.Title = "AdminNoticias";
+}
+
+<h2>AdminNoticias</h2>
+
+
+
+<br />
+
+
+
+
+
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+
+                <th>Titulo</th>
+                <th>Copete</th>
+
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Detalle</th>
+
+            </tr>
+        </thead>
+
+        <tbody class="table-group-divider">
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Titulo</td>
+                    <td>@item.Copete</td>
+
+                    <td>@item.FechaAlta</td>
+                    <td>@item.Categoria</td>
+                    <td>
+
+                        @Html.ActionLink("Editar Noticia", "EditarNoticia/" + item.id, "Noticias", null, new { @class = "btn btn-info" })
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

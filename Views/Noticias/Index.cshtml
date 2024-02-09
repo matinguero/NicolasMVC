@@ -1,0 +1,111 @@
+﻿@model IEnumerable<NicolasMVC.Models.Noticia>
+
+
+@{
+    var Categorias = ViewData["CATEGORIAS"] as List<NicolasMVC.Models.CategoriasNoticia>;
+}
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<div class="row col-md-3">
+
+    @using (Html.BeginForm("FiltrarPorCategoria", "Noticias", FormMethod.Post, new { id = "filtroForm" }))
+    {
+        @Html.DropDownList(
+"Categorias2",
+new SelectList(Categorias, "id", "Descripcion"),
+
+new { @class = "form-select", id = "Categorias2" }
+)
+    }
+
+
+
+</div>
+
+<br />
+
+
+@foreach (var item in Model)
+{
+    <div class="card" style="width: 18rem;">
+
+        @if (@item.Foto != "")
+        {
+            <img src="~/Uploads/noticias/@item.Foto" alt="@item.Titulo" />
+        }
+
+        <!--PARA MOSTRAR DESDE ARRAY DE BYTES DE LA BASE DE DATOS-->
+       @if (@item.Foto2 != null)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(@item.Foto2)" alt="Imagen desde Base de Datos" width="150" />
+
+        }
+
+
+
+
+        <div class="card-body">
+            <h5 class="card-title">@item.Titulo</h5>
+            <p class="card-text">@item.Copete</p>
+
+
+            @Html.ActionLink("Detalle", "Detalle/" + item.id, "Noticias", null, new { @class = "btn btn-info" })
+
+        </div>
+    </div>
+
+}
+
+
+
+@*<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+
+                <th>Titulo</th>
+                <th>Copete</th>
+
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Detalle</th>
+
+            </tr>
+        </thead>
+
+        <tbody class="table-group-divider">
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Titulo</td>
+                    <td>@item.Copete</td>
+
+                    <td>@item.FechaAlta</td>
+                    <td>@item.Categoria</td>
+                    <td>
+
+                        @Html.ActionLink("Detalle", "Detalle/" + item.id, "Noticias", null, new { @class = "btn btn-info" })
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@
+
+
+
+<script>
+    document.getElementById("Categorias2").addEventListener("change", function () {
+        document.getElementById("filtroForm").submit();
+    });
+</script>

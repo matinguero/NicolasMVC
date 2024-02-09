@@ -1,0 +1,120 @@
+﻿﻿@model IEnumerable<NicolasMVC.Models.Usuarios>
+
+
+@{
+    var Perfiles = ViewData["PERFILES"] as List<NicolasMVC.Models.PerfilesUsuario>;
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index Usuarios</h2>
+
+
+<main class="noticias">
+    <div class="wrapper">
+
+
+
+
+        <div class="row col-md-3">
+
+            @using (Html.BeginForm("FiltrarPorPerfil", "Usuarios", FormMethod.Post, new { id = "filtroForm" }))
+            {
+                @Html.DropDownList(
+    "Perfiles2",
+    new SelectList(Perfiles, "id", "Descripcion"),
+
+    new { @class = "form-select", id = "Perfiles2" }
+    )
+            }
+
+            @*<select name="Perfiles" class="form-select">
+                    @foreach (var perfil in Perfiles)
+                    {
+
+                        <option value="@perfil.id">@perfil.Descripcion</option>
+
+                    }
+
+                </select>*@
+
+        </div>
+
+        <br />
+
+
+        @Html.ActionLink("Agregar Usuario", "Detalle/0", "Usuarios", null, new { @class = "btn btn-danger" })
+
+
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Perfil ID</th>
+                        <th>Detalle</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-group-divider">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.nombre</td>
+                            <td>@item.apellido</td>
+                            <td>@item.email</td>
+                            <td>@item.perfil_id</td>
+
+                            <td>
+
+                                @Html.ActionLink("Ver el Detalle Helper", "Detalle/" + item.id, "Usuarios", null, new { @class = "btn btn-danger" })
+
+                                <a href="/Usuarios/Detalle?iUsuarioID=@item.id" class="btn btn-danger">Ver Detalle Link</a>
+
+
+                            </td>
+
+
+
+
+
+                            <td>
+
+                                <a onclick="javascript: return confirm('Está seguro que desea eliminar el usuario?');" href="/Usuarios/EliminarUsuario?iUsuarioID=@item.id">Eliminar</a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</main>
+
+@{
+    if (ViewBag.AlertMessage != "")
+    {
+        <script language="javascript" type="text/javascript">
+                    alert('@ViewBag.AlertMessage')
+        </script>
+    }
+}
+
+
+<script>
+    document.getElementById("Perfiles2").addEventListener("change", function () {
+        document.getElementById("filtroForm").submit();
+    });
+</script>
+
+

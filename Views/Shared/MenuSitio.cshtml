@@ -1,0 +1,69 @@
+﻿
+<div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Formulario", "Formulario", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Noticias", "Index", "Noticias", new { area = "" }, new { @class = "nav-link" })</li>
+
+        @if (Session["PERFIL_ID"] != null && Request.IsAuthenticated == true)
+        {
+
+            <ul class="navbar-nav justify-content-end">
+                @if (Session["PERFIL_ID"] != null && Request.IsAuthenticated == true)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Administración
+                        </a>
+                        <ul class="dropdown-menu">
+
+                            <!--MOSTRAR OPCIONES POR PERFILES-->
+
+                            @if (int.Parse(Session["PERFIL_ID"].ToString()) == 1)
+                            {
+                                <li>@Html.ActionLink("Usuarios", "Index", "Usuarios", new { area = "" }, new { @class = "dropdown-item" })</li>
+
+
+                                <!--LINK A LA PARTE PRIVADA DEL ADMIN DE NOTICIAS-->
+                                <li>@Html.ActionLink("Noticias", "AdminNoticias", "Noticias", new { area = "" }, new { @class = "dropdown-item" })</li>
+
+                            }
+                            else
+                            {
+
+                                <!--LINK A LA PARTE PRIVADA DEL ADMIN DE NOTICIAS-->
+                                <li>@Html.ActionLink("Noticias", "AdminNoticias", "Noticias", new { area = "" }, new { @class = "dropdown-item" })</li>
+
+                            }
+
+
+
+                        </ul>
+                    </li>
+                }
+
+                <li>@Html.ActionLink("Salir", "Logout", "Cuenta", new { area = "" }, new { @class = "nav-link" })</li>
+
+            </ul>
+
+        }
+        else
+        {
+            <ul class="navbar-nav justify-content-end">
+                <li>@Html.ActionLink("Ingreso", "Login", "Cuenta", new { area = "" }, new { @class = "nav-link" })</li>
+
+            </ul>
+
+
+        }
+
+
+
+    </ul>
+            </li>
+        }
+
+    </ul>
+</div>

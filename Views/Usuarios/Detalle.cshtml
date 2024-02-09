@@ -1,0 +1,110 @@
+﻿@model NicolasMVC.Models.Usuarios
+
+@{
+    ViewBag.Title = "Detalle";
+    var Perfiles = ViewData["PERFILES"] as List<NicolasMVC.Models.PerfilesUsuario>;
+}
+
+
+
+<h2>Detalle</h2>
+
+<!--ARMAR FORMULARIO DEL USUARIO-->
+
+@{
+    if (ViewBag.AlertMessage != "")
+    {
+        <script lang="javascript" type="text/javascript">
+                    alert('@ViewBag.AlertMessage')
+        </script>
+    }
+    else
+    {
+        <h4>@Model.id.ToString()</h4>
+        <h4>@Model.nombre</h4>
+        <h4>@Model.email</h4>
+    }
+
+    <form action="@Url.Action("GuardarUsuario", "Usuarios")" method="post" autocomplete="off">
+
+        @Html.AntiForgeryToken()
+
+        <div class="panel-body">
+            <div class="form-horizontal">
+
+                <input id="id" name="id" type="hidden" value="@Model.id" />
+
+                <div class="col-md-4"></div>
+
+                <div class="col-md-8">
+
+                    <div class="form-group">
+                        Nombre:
+                        <input id="nombre" name="nombre" class="form-control" type="text" value="@Model.nombre" />
+                        <span class="text-danger">@Html.ValidationMessage("nombre")</span>
+                    </div>
+
+                    <div class="form-group">
+                        Email:
+                        <input id="email" name="email" class="form-control" type="text" value="@Model.email" />
+                        <span class="text-danger">@Html.ValidationMessage("email")</span>
+                    </div>
+
+                    <div class="form-group">
+                        Apellido:
+                        <input id="apellido" name="apellido" class="form-control" type="text" value="@Model.apellido" />
+                        <span class="text-danger">@Html.ValidationMessage("apellido")</span>
+                    </div>
+
+                    <div class="form-group">
+                        Clave:
+                        <input id="clave" name="clave" class="form-control" type="text" value="@Model.clave" />
+                        <span class="text-danger">@Html.ValidationMessage("clave")</span>
+                    </div>
+
+                    <div class="form-group">
+                        Perfil:
+
+                        @Html.DropDownListFor(
+  x => x.perfil_id,
+  new SelectList(Perfiles, "id", "Descripcion", Model.perfil_id),
+
+  new { @class = "form-select" })
+                    </div>
+
+                    <br /><br />
+                    <div class="form-group">
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+                <br />
+                <br />
+
+                <div class="form-group">
+
+
+                    <div class="btn-group" role="group">
+                        <input id="Button1" class="btn btn-info" type="submit" value="Enviar" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </form>
+}
