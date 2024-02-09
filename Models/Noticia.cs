@@ -86,6 +86,7 @@ namespace NicolasMVC.Models
                         Noticia.Foto2 = null;
                     }
 
+
                     ListaNoticia.Add(Noticia);
                 }
 
